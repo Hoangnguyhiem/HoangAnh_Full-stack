@@ -1,0 +1,40 @@
+@layer tailwind-base, antd;
+
+@layer tailwind-base {
+    @tailwind base;
+}
+@tailwind components;
+@tailwind utilities;
+
+.description{
+    overflow: hidden;
+    line-height: 1.2rem;
+    height: 1.2rem;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+    flex: 1;
+    text-align: left;
+}
+.description2{
+    overflow: hidden;
+    line-height: 1.2rem;
+    height: 2.5rem;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    flex: 1;
+    text-align: left;
+}
+.relatives::after {
+    content: '';
+    position: absolute;
+    top: 30px;
+    left: 0;
+    border-color: transparent black transparent ;
+    border-width:0px 15.5px 5px;
+    border-style: solid;
+}
+.scrollbar::-webkit-scrollbar{
+    display: none;
+}
