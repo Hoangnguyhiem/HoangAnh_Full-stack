@@ -266,7 +266,7 @@ const HomePage = (props: Props) => {
                       </div>
                     </div>
                   </div>
-                  <div className="absolute bg-black h-[30px] w-[30px] top-0 left-0 z-20 flex items-center justify-center">
+                  <div className="absolute bg-black h-[30px] w-[30px] top-0 left-0 z-10 flex items-center justify-center">
                     <div className="text-white text-[18px] font-[700]">1</div>
                   </div>
                   <div className="">
@@ -295,7 +295,7 @@ const HomePage = (props: Props) => {
                       </div>
                     </div>
                   </div>
-                  <div className="absolute bg-black h-[30px] w-[30px] top-0 left-0 z-20 flex items-center justify-center">
+                  <div className="absolute bg-black h-[30px] w-[30px] top-0 left-0 z-10 flex items-center justify-center">
                     <div className="text-white text-[18px] font-[700]">1</div>
                   </div>
                   <div className="">
@@ -324,7 +324,7 @@ const HomePage = (props: Props) => {
                       </div>
                     </div>
                   </div>
-                  <div className="absolute bg-black h-[30px] w-[30px] top-0 left-0 z-20 flex items-center justify-center">
+                  <div className="absolute bg-black h-[30px] w-[30px] top-0 left-0 z-10 flex items-center justify-center">
                     <div className="text-white text-[18px] font-[700]">1</div>
                   </div>
                   <div className="">
@@ -353,7 +353,7 @@ const HomePage = (props: Props) => {
                       </div>
                     </div>
                   </div>
-                  <div className="absolute bg-black h-[30px] w-[30px] top-0 left-0 z-20 flex items-center justify-center">
+                  <div className="absolute bg-black h-[30px] w-[30px] top-0 left-0 z-10 flex items-center justify-center">
                     <div className="text-white text-[18px] font-[700]">1</div>
                   </div>
                   <div className="">
@@ -382,7 +382,7 @@ const HomePage = (props: Props) => {
                       </div>
                     </div>
                   </div>
-                  <div className="absolute bg-black h-[30px] w-[30px] top-0 left-0 z-20 flex items-center justify-center">
+                  <div className="absolute bg-black h-[30px] w-[30px] top-0 left-0 z-10 flex items-center justify-center">
                     <div className="text-white text-[18px] font-[700]">1</div>
                   </div>
                   <div className="">
@@ -411,7 +411,7 @@ const HomePage = (props: Props) => {
                       </div>
                     </div>
                   </div>
-                  <div className="absolute bg-black h-[30px] w-[30px] top-0 left-0 z-20 flex items-center justify-center">
+                  <div className="absolute bg-black h-[30px] w-[30px] top-0 left-0 z-10 flex items-center justify-center">
                     <div className="text-white text-[18px] font-[700]">1</div>
                   </div>
                   <div className="">

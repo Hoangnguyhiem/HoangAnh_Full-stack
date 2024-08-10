@@ -2,9 +2,10 @@ import Attribute, { ValueAttributeModel } from "../models/attribute";
 // Controller để tạo mới một thuộc tính
 export const createAttribute = async (req, res) => {
     try {
-        const { name } = req.body;
+        const { color, image } = req.body;
         const attribute = new Attribute({
-            name,
+            color,
+            image,
         });
         const newAttribute = await attribute.save();
         res.status(201).json(newAttribute);
@@ -71,18 +72,20 @@ export const deleteAttribute = async (req, res) => {
 // Controller để tạo mới một giá trị của thuộc tính
 export const createValueAttribute = async (req, res) => {
     try {
-        const { name, price, quantity } = req.body;
+        const { size, price, stock ,slug ,discount} = req.body;
         const attribute = await Attribute.findById(req.params.id);
         if (!attribute) {
             return res.status(404).json({ message: "Attribute not found" });
         }
         const valueAttribute = new ValueAttributeModel({
-            name,
             price,
-            quantity,
+            size,
+            stock,
+            slug,
+            discount,
         });
         const newValueAttribute = await valueAttribute.save();
-        attribute.values.push(newValueAttribute);
+        attribute.sizes.push(newValueAttribute);
         await attribute.save();
         res.status(201).json(newValueAttribute);
     } catch (error) {

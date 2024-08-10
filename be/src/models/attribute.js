@@ -1,18 +1,30 @@
 import mongoose, { Schema } from "mongoose";
 const ValueAttributeSchema = new Schema(
     {
-        name: {
-            type: String,
-            required: true,
-        },
         price: {
             type: Number,
             required: true,
         },
-        quantity: {
+        size: {
+            type: String,
+            required: true,
+        },
+        stock: {
             type: Number,
             required: true,
         },
+        slug: {
+            type: String,
+            required: true,
+            unique: true,
+        },
+        status: {
+            type: Boolean,
+            default: true,
+        },
+        discount: {
+            type: Number,
+        }
     },
     { timestamps: false, versionKey: false }
 );
@@ -20,12 +32,12 @@ export const ValueAttributeModel = mongoose.model("ValueAttribute", ValueAttribu
 
 const AttributeSchema = new Schema(
     {
-        name: {
+        color: {
             type: String,
             required: true,
-            unique: true,
         },
-        values: [
+        image: [],
+        sizes: [
             {
                 type: Schema.Types.ObjectId,
                 ref: "ValueAttribute",

@@ -7,22 +7,34 @@ const cartItemSchema = new Schema(
             ref: "Product",
             required: true,
         },
+        colorId: {
+            type: String,
+            // required: true,
+        },
         quantity: {
             type: Number,
             required: true,
             min: 1, // Đảm bảo số lượng ít nhất là 1
         },
+        name: {
+            type: String,
+            // required: true,
+        },
         price: {
             type: Number,
+            // required: true,
+        },
+        colors: {
+            type: String,
             required: true,
         },
-        discount: {
-            type: Number,
-            default: 0,
+        slug: {
+            type: String,
+            required: true,
         },
         // Tính giá sau khi đã áp dụng khuyến mãi (nếu có)
-        finalPrice: {
-            type: Number,
+        size: {
+            type: String,
             required: true,
         },
     },
@@ -48,15 +60,15 @@ const cartSchema = new Schema(
             // required: true,
             default: 0,
         },
-        totalDiscount: {
-            type: Number,
-            default: 0,
-        },
-        finalTotalPrice: {
-            type: Number,
-            // required: true,
-            default: 0,
-        },
+        // totalDiscount: {
+        //     type: Number,
+        //     default: 0,
+        // },
+        // finalTotalPrice: {
+        //     type: Number,
+        //     // required: true,
+        //     default: 0,
+        // },
     },
     { timestamps: true, versionKey: false }
 );
@@ -65,44 +77,44 @@ const cartSchema = new Schema(
 cartSchema.methods.updateTotals = function () {
     this.totalQuantity = this.products.reduce((acc, item) => acc + item.quantity, 0);
     this.totalPrice = this.products.reduce((acc, item) => acc + item.price * item.quantity, 0);
-    this.totalDiscount = this.products.reduce(
-        (acc, item) => acc + item.discount * item.quantity,
-        0
-    );
-    this.finalTotalPrice = this.totalPrice - this.totalDiscount;
+    // this.totalDiscount = this.products.reduce(
+    //     (acc, item) => acc + item.discount * item.quantity,
+    //     0
+    // );
+    // this.finalTotalPrice = this.totalPrice - this.totalDiscount;
 };
 
 // Thêm middleware để tự động cập nhật các trường tổng hợp trước khi lưu
-cartSchema.pre("save", function (next) {
-    this.updateTotals();
-    next();
-});
+// cartSchema.pre("save", function (next) {
+//     this.updateTotals();
+//     next();
+// });
 
 // Thêm middleware để tự động cập nhật các trường tổng hợp trước khi cập nhật
-cartSchema.pre("findOneAndUpdate", async function (next) {
-    const update = this.getUpdate();
+// cartSchema.pre("findOneAndUpdate", async function (next) {
+//     const update = this.getUpdate();
 
-    if (update.products) {
-        const totalQuantity = update.products.reduce((acc, item) => acc + item.quantity, 0);
-        const totalPrice = update.products.reduce(
-            (acc, item) => acc + item.price * item.quantity,
-            0
-        );
-        const totalDiscount = update.products.reduce(
-            (acc, item) => acc + item.discount * item.quantity,
-            0
-        );
-        const finalTotalPrice = totalPrice - totalDiscount;
+//     if (update.products) {
+//         const totalQuantity = update.products.reduce((acc, item) => acc + item.quantity, 0);
+//         const totalPrice = update.products.reduce(
+//             (acc, item) => acc + item.price * item.quantity,
+//             0
+//         );
+//         const totalDiscount = update.products.reduce(
+//             (acc, item) => acc + item.discount * item.quantity,
+//             0
+//         );
+//         const finalTotalPrice = totalPrice - totalDiscount;
 
-        this.set({
-            totalQuantity,
-            totalPrice,
-            totalDiscount,
-            finalTotalPrice,
-        });
-    }
+//         this.set({
+//             totalQuantity,
+//             totalPrice,
+//             totalDiscount,
+//             finalTotalPrice,
+//         });
+//     }
 
-    next();
-});
+//     next();
+// });
 
 export default mongoose.model.Cart || mongoose.model("Cart", cartSchema);

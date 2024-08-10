@@ -14,7 +14,11 @@ const orderItemSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         auto: true,
     },
-    name: {
+    price: {
+        type: String,
+        required: true,
+    },
+    price: {
         type: String,
         required: true,
     },
@@ -36,16 +40,16 @@ const orderSchema = new mongoose.Schema({
     items: [orderItemSchema],
     orderNumber: {
         type: String,
-        required: true,
+        // required: true,
         unique: true,
     },
     customerName: {
         type: String,
-        required: true,
+        // required: true,
     },
     totalPrice: {
         type: Number,
-        required: true,
+        // required: true,
     },
     status: {
         type: String,

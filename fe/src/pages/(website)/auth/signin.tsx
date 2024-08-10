@@ -22,7 +22,8 @@ const Signin = (props: Props) => {
   const { mutate } = useMutation({
     mutationFn: async (singin: TAuth) => {
       try {
-        await axios.post(`http://localhost:8080/api/auth/signin`, singin)
+        const user = await axios.post(`http://localhost:8080/api/auth/signin`, singin)
+        localStorage.setItem("user", JSON.stringify(user))
       } catch (error) {
         throw new Error('Đăng nhập thất bại')
       }

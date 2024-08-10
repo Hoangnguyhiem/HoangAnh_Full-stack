@@ -8,35 +8,41 @@ const productSchema = new mongoose.Schema(
             lowercase: true,
             index: true,
         },
-        slug: {
+        description: {
             type: String,
-            unique: true,
-            index: true,
+            required: true,
+        },
+        sex: {
+            type: Boolean,
+            default: true,
+        },
+        designs: {
+            type: String,
+            required: true,
+        },
+        design: {
+            type: String,
+            required: true,
+        },
+        colorText: {
+            type: String,
+            required: true,
+        },
+        material: {
+            type: String,
+            required: true,
+        },
+        photoSize: {
+            type: String,
+            required: true,
         },
         category: [
             {
-                type: String,
-                required: true,
+                type: mongoose.Schema.Types.ObjectId,
+                ref: "Category",
             },
         ],
-        price: {
-            type: Number,
-            required: true,
-            default: 0,
-        },
-        image: String,
-        gallery: [String],
-        description: String,
-        discount: {
-            type: Number,
-            default: 0,
-        },
-        countInStock: {
-            type: Number,
-            default: 0,
-        },
         featured: Boolean,
-        tags: [String],
         attributes: [
             {
                 type: mongoose.Schema.Types.ObjectId,

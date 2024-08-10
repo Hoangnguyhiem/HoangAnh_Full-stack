@@ -1,4 +1,5 @@
 import instance from '@/configs/axios'
+import { AxiosResponse } from 'axios'
 // import { IProduct } from '@/common/types/product'
 // const userDataString = localStorage.getItem('user');
 // let token = '';
@@ -11,14 +12,10 @@ import instance from '@/configs/axios'
 //     }
 // }
 // // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const getAllProducts = async (params?: any) => {
-    try {
-        const response = await instance.get('/products', { params })
-        return response
-    } catch (error) {
-        return []
-    }
+export const getAllProducts = async (): Promise<AxiosResponse<any>> => {
+        return await instance.get('/products')
 }
+
 // export const getProductById = async (id: number | string) => {
 //     try {
 //         const response = await instance.get(`/products/${id}`)

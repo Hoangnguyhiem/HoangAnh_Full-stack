@@ -1,5 +1,20 @@
 
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom"
+
 const Header = () => {
+
+  const [userId, setUserId] = useState(null); // Initialize state with null
+
+  useEffect(() => {
+    const user = localStorage.getItem("user");
+    if (user) {
+      const { data } = JSON.parse(user);
+      setUserId(data.id);
+    }
+  }, []); // Empty dependency array to run this effect only on mount
+
+  console.log(userId);
   return (
     <>
       <div className="bg-black h-[42px] text-center flex">
@@ -43,9 +58,9 @@ const Header = () => {
               </a>
             </div>
             <div className="flex items-center col-start-3 lg:col-start-2">
-              <a href="" className='w-[40px] h-[40px] flex justify-center items-center text-center'>
+              <Link to={`carts/${userId}`} className='w-[40px] h-[40px] flex justify-center items-center text-center'>
                 <img className=" ls-is-cached lazyloaded" src="https://file.hstatic.net/200000642007/file/icon-cart_d075fce117f74a07ae7f149d8943fc33.svg" data-src="https://file.hstatic.net/200000642007/file/icon-cart_d075fce117f74a07ae7f149d8943fc33.svg" alt="Icon cart" width={24} height={24} />
-              </a>
+              </Link>
             </div>
             <div className="items-center hidden lg:flex col-start-2 row-start-1 lg:col-start-3">
               <a href="" className='w-[40px] h-[40px] flex justify-center items-center text-center'>

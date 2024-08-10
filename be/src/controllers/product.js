@@ -4,6 +4,7 @@ import Product from "../models/product";
 export const create = async (req, res) => {
     try {
         const product = await Product.create(req.body);
+        console.log(req.body)
 
         return res.status(StatusCodes.CREATED).json(product);
     } catch (error) {
@@ -11,29 +12,47 @@ export const create = async (req, res) => {
     }
 };
 
+// export const getAllProducts = async (req, res) => {
+//     const { _page = 1, _limit = 10, _sort = "createdAt", _order = "asc", _expand } = req.query;
+//     const options = {
+//         page: _page,
+//         limit: _limit,
+//         sort: { [_sort]: _order === "desc" ? -1 : 1 },
+//     };
+//     const populateOptions = _expand ? [{ path: "category", select: "name" }] : [];
+//     try {
+//         const result = await Product.paginate(
+//             { categoryId: null },
+//             { ...options, populate: populateOptions }
+//         );
+//         if (result.docs.length === 0) return res.status(StatusCodes.OK).json({ data: [] });
+//         const response = {
+//             data: result.docs,
+//             pagination: {
+//                 currentPage: result.page,
+//                 totalPages: result.totalPages,
+//                 totalItems: result.totalDocs,
+//             },
+//         };
+//         return res.status(StatusCodes.OK).json(response);
+//     } catch (error) {
+//         return res.status(StatusCodes.BAD_REQUEST).json({ message: error.message });
+//     }
+// };
+
 export const getAllProducts = async (req, res) => {
-    const { _page = 1, _limit = 10, _sort = "createdAt", _order = "asc", _expand } = req.query;
-    const options = {
-        page: _page,
-        limit: _limit,
-        sort: { [_sort]: _order === "desc" ? -1 : 1 },
-    };
-    const populateOptions = _expand ? [{ path: "category", select: "name" }] : [];
     try {
-        const result = await Product.paginate(
-            { categoryId: null },
-            { ...options, populate: populateOptions }
-        );
-        if (result.docs.length === 0) return res.status(StatusCodes.OK).json({ data: [] });
-        const response = {
-            data: result.docs,
-            pagination: {
-                currentPage: result.page,
-                totalPages: result.totalPages,
-                totalItems: result.totalDocs,
-            },
-        };
-        return res.status(StatusCodes.OK).json(response);
+        const product = await Product.find()
+            .populate('category')
+            .populate({
+                path: 'attributes',
+                populate: {
+                    path: 'sizes'
+                }
+            });
+            console.log(product);
+            
+        return res.status(StatusCodes.OK).json(product);
     } catch (error) {
         return res.status(StatusCodes.BAD_REQUEST).json({ message: error.message });
     }
@@ -41,7 +60,14 @@ export const getAllProducts = async (req, res) => {
 
 export const getProductById = async (req, res) => {
     try {
-        const product = await Product.findById(req.params.id);
+        const product = await Product.findById(req.params.id)
+            .populate('category')
+            .populate({
+                path: 'attributes',
+                populate: {
+                    path: 'sizes'
+                }
+            });
         if (product.length === 0)
             return res
                 .status(StatusCodes.NOT_FOUND)
@@ -75,5 +101,5 @@ export const related = async (req, res) => {
             _id: { $ne: req.params.productId },
         });
         return res.status(StatusCodes.OK).json(product);
-    } catch (error) {}
+    } catch (error) { }
 };

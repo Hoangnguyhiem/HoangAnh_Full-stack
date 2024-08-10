@@ -38,3 +38,13 @@
 .scrollbar::-webkit-scrollbar{
     display: none;
 }
+.after::after{
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 41px;
+    height: 41px;
+    background: transparent;
+    border-radius: 100%;
+}

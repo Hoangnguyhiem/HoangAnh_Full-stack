@@ -83,10 +83,12 @@ export const signin = async (req, res) => {
             }
             const accessToken = generateAccessToken(user._id);
             const refreshToken = generateRefreshToken(user._id); // Generate refresh token
+            const id = user._id
 
             return res.status(StatusCodes.OK).json({
                 accessToken,
                 refreshToken,
+                id
             });
         }
     } catch (error) {
