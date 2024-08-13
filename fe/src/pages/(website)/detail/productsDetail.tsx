@@ -9,8 +9,9 @@ type Props = {}
 const DetailPage = (props: Props) => {
   const [messageApi, contextHolder] = message.useMessage()
   const [quantity, setQuantity] = useState(1)
-  const [colors, setSelectedColor] = useState('');
+  const [colors, setSelectedColor] = useState<any>({});
   const [sizes, setSelectedSize] = useState<any>({});
+  
 
   const { productId } = useParams()
 
@@ -54,7 +55,7 @@ const DetailPage = (props: Props) => {
   // Tự động chọn size đầu tiên của màu được chọn
   useEffect(() => {
     if (colors) {
-      const colorData = data?.data.attributes.find((color: any) => color.color === colors);
+      const colorData = data?.data.attributes.find((color: any) => color.color === colors.color);
       if (colorData) {
         const availableSize = colorData.sizes.find((size: any) => size.stock > 0);
         if (availableSize) {
@@ -64,12 +65,12 @@ const DetailPage = (props: Props) => {
         }
       }
     }
-  }, [colors, data]);
+  }, [colors.color, data]);
 
   // Tự động chọn màu
   useEffect(() => {
     if (data?.data.attributes?.[0]) {
-      const { color } = data.data.attributes[0];
+      const color = data.data.attributes[0];
       color && setSelectedColor(color);
     }
 
@@ -83,7 +84,9 @@ const DetailPage = (props: Props) => {
         if (user) {
           const { data } = JSON.parse(user)
           const userId = data.id
-          await axios.post(`http://localhost:8080/api/carts/add-to-cart`, { ...cart, userId })
+          const pr =  await axios.post(`http://localhost:8080/api/carts/add-to-cart`, { ...cart, userId })
+          console.log(pr);
+          
         }
 
       } catch (error) {
@@ -107,28 +110,31 @@ const DetailPage = (props: Props) => {
 
   const { _id: colorId, price, size, slug, status, discount } = sizes
   const name = data?.data?.name
+  const { color , image } = colors
+
+  // console.log(color);
+  // console.log(image);
+  
 
   const onSubmitCart = () => {
-    mutate({ colorId, productId, colors, price, size, name, quantity, slug } as any)
+    mutate({ colorId, productId, color, image, price, size, name, quantity, slug } as any)
   }
 
   const onSubmit = () => {
     localStorage.setItem("buy", JSON.stringify({ colors, sizes, quantity }))
   }
 
-  const [currentIndex, setCurrentIndex] = useState(0); // State to track the current image index
+  const [currentIndex, setCurrentIndex] = useState(0);
+  
 
-  // Function to handle thumbnail click
   const handleThumbnailClick = (index: any) => {
-    setCurrentIndex(index); // Update the currentIndex state with the clicked thumbnail index
+    setCurrentIndex(index);
   };
 
-  // Function to handle next button click
   const handleNext = () => {
     setCurrentIndex((currentIndex + 1) % data?.data.attributes[0].image.length);
   };
 
-  // Function to handle previous button click
   const handlePrev = () => {
     setCurrentIndex((currentIndex - 1 + data?.data.attributes[0].image.length) % data?.data.attributes[0].image.length);
   };
@@ -204,7 +210,7 @@ const DetailPage = (props: Props) => {
                 <div className="">
                   <div className="w-[100%] relative">
                     {data?.data.attributes.map((item: any) => (
-                      <div key={item.color} className={`${colors === item.color ? "" : "hidden"}`}>
+                      <div key={item.color} className={`${colors.color === item.color ? "" : "hidden"}`}>
                         {item.image.map((value: any, index: any) => (
                           <div
                             key={index}
@@ -214,7 +220,7 @@ const DetailPage = (props: Props) => {
                             <div className="absolute top-[50%] translate-y-[-50%] text-black flex w-[100%] justify-between">
                               <button
                                 className="w-[40px] h-[40px] flex justify-center items-center"
-                                onClick={handlePrev} // Handle previous button click
+                                onClick={handlePrev}
                               >
                                 <svg
                                   xmlns="http://www.w3.org/2000/svg"
@@ -233,7 +239,7 @@ const DetailPage = (props: Props) => {
                               </button>
                               <button
                                 className="w-[40px] h-[40px] flex justify-center items-center"
-                                onClick={handleNext} // Handle next button click
+                                onClick={handleNext}
                               >
                                 <svg
                                   xmlns="http://www.w3.org/2000/svg"
@@ -263,7 +269,7 @@ const DetailPage = (props: Props) => {
                     <button
                       key={dotIndex}
                       className={`w-[8px] h-[8px] rounded-[50%] border-[1px] mx-[3.5px] ${dotIndex === currentIndex ? 'bg-black border-transparent' : 'bg-white border-[#bcbcbc]'}`}
-                      onClick={() => handleThumbnailClick(dotIndex)} // Handle dot click
+                      onClick={() => handleThumbnailClick(dotIndex)} 
                     >
                     </button>
                   ))}
@@ -273,14 +279,14 @@ const DetailPage = (props: Props) => {
               {data?.data.attributes.map((item: any) => (
                 <div
                   key={item.color}
-                  className={`${colors === item.color ? "lg:flex" : "lg:hidden"} hidden lg:w-[14%] lg:flex-col lg:overflow-auto lg:order-1 lg:gap-4 lg:pr-[8px] lg:h-[96%] scrollbar`}
+                  className={`${colors.color === item.color ? "lg:flex" : "lg:hidden"} hidden lg:w-[14%] lg:flex-col lg:overflow-auto lg:order-1 lg:gap-4 lg:pr-[8px] lg:h-[96%] scrollbar`}
                 >
                   {item.image.map((value: any, index: any) => (
                     <div
                       key={index}
-                      className={`pt-[120%] bg-cover bg-no-repeat bg-center cursor-pointer relative ${index === currentIndex ? 'border-with-image' : ''}`} // Apply the custom border class
+                      className={`pt-[120%] bg-cover bg-no-repeat bg-center cursor-pointer relative ${index === currentIndex ? 'border-[#bcbcbc] border-[1px]' : ''}`} // Apply the custom border class
                       style={{ backgroundImage: `url(${value})` }}
-                      onClick={() => handleThumbnailClick(index)} // Update the main image on thumbnail click
+                      onClick={() => handleThumbnailClick(index)} 
                     ></div>
                   ))}
                 </div>
@@ -296,7 +302,7 @@ const DetailPage = (props: Props) => {
                   <div className="">
                     <h1 className='text-[18px] mb-[8px] font-[500] leading-6'>MLB - Áo thun unisex cổ V tay ngắn Varsity Soccer Jersey</h1>
                     {data?.data.attributes.map((item: any) => (
-                      <div className={`${item.color === colors ? "flex" : "hidden"} h-[12px] overflow-hidden`}>
+                      <div className={`${item.color === colors.color ? "flex" : "hidden"} h-[12px] overflow-hidden`}>
                         {item.sizes.map((value: any, index: any) => (
                           <p key={index + 1} className={`${value.size === sizes.size ? "flex" : "hidden"} text-[12px] leading-3 font-[500]`}>
                             Mã sản phẩm <span>{value.slug}</span>
@@ -319,7 +325,7 @@ const DetailPage = (props: Props) => {
 
                 {
                   data?.data.attributes.map((item: any, index: any) => (
-                    <div key={index + 1} className={`${item.color === colors ? "flex" : "hidden"} tab_price px-[20px] my-[18px] h-[25px] overflow-hidden *:text-[20px] font-[500] lg:px-0`}>
+                    <div key={index + 1} className={`${item.color === colors.color ? "flex" : "hidden"} tab_price px-[20px] my-[18px] h-[25px] overflow-hidden *:text-[20px] font-[500] lg:px-0`}>
                       {item.sizes.map((value: any, index: any) => (
                         <span className={`${value.size === sizes.size ? "flex" : "hidden"}`} key={index + 1}>{value.price} VND</span>
                       ))}
@@ -337,9 +343,9 @@ const DetailPage = (props: Props) => {
                           id={item.color}
                           name="options"
                           value="1"
-                          onChange={() => setSelectedColor(item.color)}
+                          onChange={() => setSelectedColor(item)}
                         />
-                        <label data-tab={item.color} htmlFor={item.color} key={index + 1} className={`${colors === item.color ? "border-black" : ""} after relative tab_color w-[42px] h-[42px] rounded-[50%] border-[1px] border-soli flex justify-center text-center`}>
+                        <label data-tab={item.color} htmlFor={item.color} key={index + 1} className={`${colors.color === item.color ? "border-black" : ""} after relative tab_color w-[42px] h-[42px] rounded-[50%] border-[1px] border-soli flex justify-center text-center`}>
                           <div className="w-[40px] h-[40px] rounded-[50%] border-[5px] border-solid border-white" style={{ backgroundImage: `url('${item.color}')` }}></div>
                         </label>
                       </>
@@ -361,7 +367,7 @@ const DetailPage = (props: Props) => {
                   {
                     data?.data.attributes.map((item: any, index: any) => (
 
-                      <div data-tab={item.color} key={index + 1} className={`tab_color-size ${item.color === colors ? "flex" : "hidden"} flex-wrap *:text-[14px] *:justify-center *:items-center *:rounded-[18px] *:mb-[8px] *:mr-[8px] *:px-[16px] *:py-[7.5px] *:cursor-pointer *:min-w-[65px] *:border-[#E8E8E8] *:border-[1px] *:border-solid *:font-[500]`}>
+                      <div data-tab={item.color} key={index + 1} className={`tab_color-size ${item.color === colors.color ? "flex" : "hidden"} flex-wrap *:text-[14px] *:justify-center *:items-center *:rounded-[18px] *:mb-[8px] *:mr-[8px] *:px-[16px] *:py-[7.5px] *:cursor-pointer *:min-w-[65px] *:border-[#E8E8E8] *:border-[1px] *:border-solid *:font-[500]`}>
                         {item.sizes.map((value: any, index: any) => (
                           <>
                             <input

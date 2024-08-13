@@ -11,7 +11,8 @@ export const getCartByUserId = async (req, res) => {
         const cartData = {
             products: cart.products.map((item) => ({
                 productId: item.productId._id,
-                color: item.colors,
+                color: item.color,
+                image: item.image,
                 colorId: item.colorId,
                 size: item.size,
                 name: item.name,
@@ -25,7 +26,7 @@ export const getCartByUserId = async (req, res) => {
 };
 // Thêm sản phẩm vào giỏ hàng
 export const addItemToCart = async (req, res) => {
-    const { userId, colorId, productId, quantity, colors, price, size, name ,slug } = req.body;
+    const { userId, colorId, productId, quantity, color, image, price, size, name ,slug } = req.body;
     try {
         // kiểm tra giỏ hàng có tồn tại chưa? dựa theo UserId
         let cart = await Cart.findOne({ userId });
@@ -48,7 +49,7 @@ export const addItemToCart = async (req, res) => {
             cart.products[existColorIndex].quantity += quantity;
         } else {
             // nếu sản phẩm chưa có trong giỏ hàng thì chúng ta thêm mới
-            cart.products.push({ colorId, productId, quantity, colors, price, size, name , slug });
+            cart.products.push({ colorId, productId, quantity, color, image, price, size, name , slug });
         }
         await cart.save();
         return res.status(StatusCodes.OK).json({ cart });

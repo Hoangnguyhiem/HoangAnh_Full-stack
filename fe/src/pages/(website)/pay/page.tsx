@@ -1,28 +1,36 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 type Props = {}
 
 const PayPage = (props: Props) => {
+
+    const [todos, setTodos] = useState<boolean>(false)
     return (
         <main>
-            <div className="px-[15px]">
-                <div className="mb-[16px]">
-                    <button className='flex items-center justify-between w-full'>
-                        <div className="flex">
+            <div className="px-[15px] lg:flex pc:px-[80px] pc:py-[64px]">
+
+
+                <div className="mb-[16px] lg:w-[35%] lg:order-2">
+                    <button className='flex items-center justify-between w-full lg:mb-[16px]'>
+                        <div onClick={() => { setTodos(!todos) }} className="flex items-center">
                             <span className="text-[16px] font-[700]">TÓM TẮT ĐƠN HÀNG</span>
-                            <svg className='ml-[4px]' width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"> <path d="M16.25 7.5L10 13.75L3.75 7.5" stroke="#2E2E2E" stroke-linecap="round" stroke-linejoin="round"></path> </svg>
+                            <svg className={`${todos ? "hidden" : ""} ml-[4px]`} width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"> <path d="M16.25 7.5L10 13.75L3.75 7.5" stroke="#2E2E2E" stroke-linecap="round" stroke-linejoin="round"></path> </svg>
+                            <svg className={`${todos ? "" : "hidden"} ml-[4px]`} width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" transform="rotate(180)">
+                                <path d="M16.25 7.5L10 13.75L3.75 7.5" stroke="#2E2E2E" stroke-linecap="round" stroke-linejoin="round"></path>
+                            </svg>
+
                         </div>
                         <span className="text-[20px] font-[700]">4,750,000</span>
                     </button>
-                    <div className="bg-[#f7f7f7] -mx-[16px]">
+                    <div className="bg-[#f7f7f7] -mx-[16px] lg:mx-0">
                         <div className="w-[100%] p-[16px]">
-                            <div className="">
+                            <div className={`${todos ? "hidden" : ""}`}>
                                 <div className="mb-[16px]">
                                     <div className='w-[100%] flex justify-between'>
-                                        <div className='w-[24.978%]'>
+                                        <div className='w-[100px] h-[100px]'>
                                             <div className="pt-[100%] bg-cover bg-center bg-no-repeat" style={{ backgroundImage: "url('https://product.hstatic.net/200000642007/product/50ivs_3atsv2143_1_bc24aeae61864aac8fd717a2e5837448_34181f53e68d4b439b1bc95d333cbd79_grande.jpg')", }}></div>
                                         </div>
-                                        <div className="w-[72.853%] pl-[12px] flex flex-col">
+                                        <div className="w-full pl-[12px] flex flex-col">
                                             <div className="leading-5">
                                                 <b className='text-[16px]'>MLB</b><br />
                                                 <span className='text-[14px] mb-[4px]'>Áo thun unisex cổ tròn tay ngắn hiện đại</span>
@@ -37,10 +45,10 @@ const PayPage = (props: Props) => {
                                 </div>
                                 <div className="mb-[16px]">
                                     <div className='w-[100%] flex justify-between'>
-                                        <div className='w-[24.978%]'>
+                                        <div className='w-[100px] h-[100px]'>
                                             <div className="pt-[100%] bg-cover bg-center bg-no-repeat" style={{ backgroundImage: "url('https://product.hstatic.net/200000642007/product/50ivs_3atsv2143_1_bc24aeae61864aac8fd717a2e5837448_34181f53e68d4b439b1bc95d333cbd79_grande.jpg')", }}></div>
                                         </div>
-                                        <div className="w-[72.853%] pl-[12px] flex flex-col">
+                                        <div className="w-full pl-[12px] flex flex-col">
                                             <div className="leading-5">
                                                 <b className='text-[16px]'>MLB</b><br />
                                                 <span className='text-[14px] mb-[4px]'>Áo thun unisex cổ tròn tay ngắn hiện đại</span>
@@ -55,10 +63,10 @@ const PayPage = (props: Props) => {
                                 </div>
                                 <div className="mb-[16px]">
                                     <div className='w-[100%] flex justify-between'>
-                                        <div className='w-[24.978%]'>
+                                        <div className='w-[100px] h-[100px]'>
                                             <div className="pt-[100%] bg-cover bg-center bg-no-repeat" style={{ backgroundImage: "url('https://product.hstatic.net/200000642007/product/50ivs_3atsv2143_1_bc24aeae61864aac8fd717a2e5837448_34181f53e68d4b439b1bc95d333cbd79_grande.jpg')", }}></div>
                                         </div>
-                                        <div className="w-[72.853%] pl-[12px] flex flex-col">
+                                        <div className="w-full pl-[12px] flex flex-col">
                                             <div className="leading-5">
                                                 <b className='text-[16px]'>MLB</b><br />
                                                 <span className='text-[14px] mb-[4px]'>Áo thun unisex cổ tròn tay ngắn hiện đại</span>
@@ -123,68 +131,171 @@ const PayPage = (props: Props) => {
                         </div>
                     </div>
                 </div>
-                <div className="">
+
+
+
+                <div className="lg:w-[65%] lg:pr-[80px] lg:order-1">
                     <h2 className='font-[700] text-[16px] tr'>THÔNG TIN GIAO HÀNG</h2>
-                    <div className="mt-[10px]">
-                        <label htmlFor="" className='text-[#868D95] font-[600] text-[13px]'>HỌ VÀ TÊN</label>
-                        <input className='border-[#868D95] border-[1px] rounded-[3px] p-[12px] text-[14px] leading-3 w-[100%] mt-[8px]' type="text" placeholder='Nhập Họ và tên' />
-                    </div>
-                    <div className="mt-[10px]">
-                        <label htmlFor="" className='text-[#868D95] font-[600] text-[13px]'>EMAIL</label>
-                        <input className='border-[#868D95] border-[1px] rounded-[3px] p-[12px] text-[14px] leading-3 w-[100%] mt-[8px]' type="text" placeholder='Nhập Email' />
-                    </div>
-                    <div className="mt-[10px]">
-                        <label htmlFor="" className='text-[#868D95] font-[600] text-[13px]'>SỐ ĐIỆN THOẠI</label>
-                        <input className='border-[#868D95] border-[1px] rounded-[3px] p-[12px] text-[14px] leading-3 w-[100%] mt-[8px]' type="text" placeholder='Nhập Số điện thoại' />
-                    </div>
+                    <div className="lg:flex lg:flex-wrap lg:justify-between">
 
-                    <div className="flex justify-between mt-[15px]">
-                        <div className="flex items-center">
-                            <label htmlFor="option">
-                                <div className="w-[18px] h-[18px] bg-black border-[4px] border-white mr-[5px]"></div>
-                            </label>
-                            <input className='hidden' type="radio" name="option" id="option" />
-                            <span className='font-[600]'>Giao tận nơi</span>
+                        <div className="mt-[10px] lg:w-[100%]">
+                            <label htmlFor="" className='text-[#868D95] font-[600] text-[13px]'>HỌ VÀ TÊN</label>
+                            <input className='border-[#868D95] border-[1px] rounded-[3px] p-[12px] text-[14px] leading-3 w-[100%] mt-[8px]' type="text" placeholder='Nhập Họ và tên' />
                         </div>
-                        <div className="flex items-center">
-                            <label htmlFor="option1">
-                                <div className="w-[18px] h-[18px] bg-black border-[4px] border-white mr-[5px]"></div>
-                            </label>
-                            <input className='hidden' type="radio" name="option" id="option1" />
-                            <span className='font-[600]'>Nhận tại cửa hàng</span>
+                        <div className="mt-[10px] lg:w-[48%]">
+                            <label htmlFor="" className='text-[#868D95] font-[600] text-[13px]'>EMAIL</label>
+                            <input className='border-[#868D95] border-[1px] rounded-[3px] p-[12px] text-[14px] leading-3 w-[100%] mt-[8px]' type="text" placeholder='Nhập Email' />
+                        </div>
+                        <div className="mt-[10px] lg:w-[48%]">
+                            <label htmlFor="" className='text-[#868D95] font-[600] text-[13px]'>SỐ ĐIỆN THOẠI</label>
+                            <input className='border-[#868D95] border-[1px] rounded-[3px] p-[12px] text-[14px] leading-3 w-[100%] mt-[8px]' type="text" placeholder='Nhập Số điện thoại' />
                         </div>
                     </div>
 
-                    <div className="mt-[10px]">
-                        <label htmlFor="" className='text-[#868D95] font-[600] text-[13px]'>SỐ ĐIỆN THOẠI</label>
-                        <input className='border-[#868D95] border-[1px] rounded-[3px] p-[12px] text-[14px] leading-3 w-[100%] mt-[8px]' type="text" placeholder='Nhập Số điện thoại' />
+                    <div className="flex mt-[15px] py-[8px]">
+                        <div className="flex items-center w-[50%]">
+                            <input
+                                className='hidden'
+                                type="radio"
+                                id='checkbox'
+                                name="options"
+                                value="1"
+                            />
+                            <label htmlFor="checkbox" className={`after relative tab_color w-[20px] h-[20px] rounded-[50%] border-[1px] border-soli flex justify-center text-center`}>
+                                <div className="w-[18px] h-[18px] rounded-[50%] border-[5px] border-solid border-white bg-black"></div>
+                            </label>
+                            <span className='ml-[5px]'>Giao tận nơi</span>
+                        </div>
+                        <div className="flex items-center w-[50%] pl-[16px]">
+                            <input
+                                className='hidden'
+                                type="radio"
+                                id='checkbox'
+                                name="options"
+                                value="1"
+                            />
+                            <label htmlFor="checkbox" className={`after relative tab_color w-[20px] h-[20px] rounded-[50%] border-[1px] border-soli flex justify-center text-center`}>
+                                <div className="w-[18px] h-[18px] rounded-[50%] border-[5px] border-solid border-white bg-black"></div>
+                            </label>
+                            <span className='ml-[5px]'>Nhận tại cửa hàng</span>
+                        </div>
                     </div>
-                    <div className="mt-[10px]">
-                        <label htmlFor="" className='text-[#868D95] font-[600] text-[13px]'>HỌ VÀ TÊN</label>
-                        <select className='border-[#868D95] border-[1px] rounded-[3px] p-[12px] text-[14px] leading-3 w-[100%] mt-[8px]' value="">
-                            <option>sdfsdf</option>
-                        </select>
+
+                    <div className="lg:flex lg:flex-wrap lg:justify-between">
+
+                        <div className="mt-[10px] lg:w-[48%]">
+                            <label htmlFor="" className='text-[#868D95] font-[600] text-[13px]'>EMAIL</label>
+                            <input className='border-[#868D95] border-[1px] rounded-[3px] p-[12px] text-[14px] leading-3 w-[100%] mt-[8px]' type="text" placeholder='Nhập Email' />
+                        </div>
+                        <div className="mt-[10px] lg:w-[48%]">
+                            <label htmlFor="" className='text-[#868D95] font-[600] text-[13px]'>SỐ ĐIỆN THOẠI</label>
+                            <input className='border-[#868D95] border-[1px] rounded-[3px] p-[12px] text-[14px] leading-3 w-[100%] mt-[8px]' type="text" placeholder='Nhập Số điện thoại' />
+                        </div>
+                        <div className="mt-[10px] lg:w-[48%]">
+                            <label htmlFor="" className='text-[#868D95] font-[600] text-[13px]'>EMAIL</label>
+                            <input className='border-[#868D95] border-[1px] rounded-[3px] p-[12px] text-[14px] leading-3 w-[100%] mt-[8px]' type="text" placeholder='Nhập Email' />
+                        </div>
+                        <div className="mt-[10px] lg:w-[48%]">
+                            <label htmlFor="" className='text-[#868D95] font-[600] text-[13px]'>SỐ ĐIỆN THOẠI</label>
+                            <input className='border-[#868D95] border-[1px] rounded-[3px] p-[12px] text-[14px] leading-3 w-[100%] mt-[8px]' type="text" placeholder='Nhập Số điện thoại' />
+                        </div>
                     </div>
-                    <div className="mt-[10px]">
-                        <label htmlFor="" className='text-[#868D95] font-[600] text-[13px]'>HỌ VÀ TÊN</label>
-                        <select className='border-[#868D95] border-[1px] rounded-[3px] p-[12px] text-[14px] leading-3 w-[100%] mt-[8px]' value="">
-                            <option>sdfsdf</option>
-                        </select>
+
+                    <div className="flex mt-[15px] pb-[16px] pt-[8px]">
+                        <div className="flex items-center w-[50%]">
+                            <input
+                                className='hidden'
+                                type="radio"
+                                id='checkbox'
+                                name="options"
+                                value="1"
+                            />
+                            <label htmlFor="checkbox" className={`after relative tab_color w-[20px] h-[20px] rounded-[50%] border-[1px] border-soli flex justify-center text-center`}>
+                                <div className="w-[18px] h-[18px] rounded-[50%] border-[5px] border-solid border-white bg-black"></div>
+                            </label>
+                            <span className='ml-[5px]'>Giao tận nơi</span>
+                        </div>
+                        <div className="flex items-center w-[50%] pl-[16px]">
+                            <input
+                                className='hidden'
+                                type="radio"
+                                id='checkbox'
+                                name="options"
+                                value="1"
+                            />
+                            <label htmlFor="checkbox" className={`after relative tab_color w-[20px] h-[20px] rounded-[50%] border-[1px] border-soli flex justify-center text-center`}>
+                                <div className="w-[18px] h-[18px] rounded-[50%] border-[5px] border-solid border-white bg-black"></div>
+                            </label>
+                            <span className='ml-[5px]'>Nhận tại cửa hàng</span>
+                        </div>
                     </div>
-                    <div className="mt-[10px]">
-                        <label htmlFor="" className='text-[#868D95] font-[600] text-[13px]'>HỌ VÀ TÊN</label>
-                        <select className='border-[#868D95] border-[1px] rounded-[3px] p-[12px] text-[14px] leading-3 w-[100%] mt-[8px]' value="">
-                            <option>sdfsdf</option>
-                        </select>
+                    <hr className="border-dashed border-black" />
+
+
+                    <div className="mt-[16px]">
+                        <div className="mb-[30px]">
+                            <h2 className='font-[600] text-[16px] mb-[5px]'>PHƯƠNG THỨC VẬN CHUYỂN</h2>
+                            <div className="flex flex-col items-center p-[20px]">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="0.4" stroke="#808080" className="size-28">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 13.5h3.86a2.25 2.25 0 0 1 2.012 1.244l.256.512a2.25 2.25 0 0 0 2.013 1.244h3.218a2.25 2.25 0 0 0 2.013-1.244l.256-.512a2.25 2.25 0 0 1 2.013-1.244h3.859m-19.5.338V18a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18v-4.162c0-.224-.034-.447-.1-.661L19.24 5.338a2.25 2.25 0 0 0-2.15-1.588H6.911a2.25 2.25 0 0 0-2.15 1.588L2.35 13.177a2.25 2.25 0 0 0-.1.661Z" />
+                                </svg>
+                                <p className='text-[14px] text-[#808080]'>Vui lòng chọn tỉnh / thành để có danh sách phương thức vận chuyển.</p>
+                            </div>
+                            <hr className='[#808080] mt-[5px]' />
+                        </div>
+
+
+                        <div className="">
+                            <h2 className='font-[600] text-[16px] mb-[5px]'>PHƯƠNG THỨC THANH TOÁN</h2>
+                            <div className="">
+                                <div className="flex items-center py-[8px]">
+                                    <div className="flex items-center mr-[10px]">
+                                        <input
+                                            className='hidden'
+                                            type="radio"
+                                            id='checkbox'
+                                            name="options"
+                                            value="1"
+                                        />
+                                        <label htmlFor="checkbox" className={`after relative tab_color w-[20px] h-[20px] rounded-[50%] border-[1px] border-soli flex justify-center text-center`}>
+                                            <div className="w-[18px] h-[18px] rounded-[50%] border-[5px] border-solid border-white bg-black"></div>
+                                        </label>
+                                    </div>
+                                    <img src="https://file.hstatic.net/1000284478/file/atm-01_3e4ba76cfbca40f0b523f803829ae9d2.svg" alt="logo" width={40} height={40} />
+                                    <span className="ml-[10px] font-[600]">Thanh toán bằng ATM/Thẻ nội địa</span>
+                                </div>
+                                <div className="flex items-center py-[8px]">
+                                    <div className="flex items-center mr-[10px]">
+                                        <input
+                                            className='hidden'
+                                            type="radio"
+                                            id='checkbox'
+                                            name="options"
+                                            value="1"
+                                        />
+                                        <label htmlFor="checkbox" className={`after relative tab_color w-[20px] h-[20px] rounded-[50%] border-[1px] border-soli flex justify-center text-center`}>
+                                            <div className="w-[18px] h-[18px] rounded-[50%] border-[5px] border-solid border-white bg-black"></div>
+                                        </label>
+                                    </div>
+                                    <img src="https://file.hstatic.net/1000284478/file/atm-01_3e4ba76cfbca40f0b523f803829ae9d2.svg" alt="logo" width={40} height={40} />
+                                    <span className="ml-[10px] font-[600]">Thanh toán bằng ATM/Thẻ nội địa</span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
 
-                    <div className="">
-                        <h2>PHƯƠNG THỨC VẬN CHUYỂN</h2>
-                        <h2>PHƯƠNG THỨC THANH TOÁN</h2>
+                    <div className="flex fixed bottom-0 left-0 w-[100%] justify-center lg:py-[32px] bg-[#F0F0F0] *:w-[50%] *:flex *:justify-center *:py-[18px] *:font-[600] *:text-[16px] lg:h-[126px] *:lg:w-[330px] *:lg:items-center ">
+                        <div className="bg-white lg:mr-[25px]">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"> <path d="M11.4375 18.75L4.6875 12L11.4375 5.25M5.625 12H19.3125" stroke="#2E2E2E" stroke-linecap="round" stroke-linejoin="round"></path> </svg>
+                            QUAY LẠI GIỎ HÀNG</div>
+                        <div className="bg-black text-white">HOÀN TẤT ĐƠN HÀNG</div>
                     </div>
-
                 </div>
+
+
+
+
             </div>
         </main>
     )

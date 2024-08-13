@@ -24,15 +24,15 @@ const cartItemSchema = new Schema(
             type: Number,
             // required: true,
         },
-        colors: {
+        color: {
             type: String,
-            required: true,
+            // required: true,
         },
+        image: [],
         slug: {
             type: String,
             required: true,
         },
-        // Tính giá sau khi đã áp dụng khuyến mãi (nếu có)
         size: {
             type: String,
             required: true,
