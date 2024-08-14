@@ -21,7 +21,7 @@ app.use(cors());
 app.use(morgan("tiny"));
 
 // connect db
-connectDB("mongodb://localhost:27017/wd18329");
+connectDB("mongodb+srv://vinsomatem97:vinsomatem97@mlb.jo6kt.mongodb.net/?retryWrites=true&w=majority&appName=MLB");
 
 // routers
 app.use("/api", authRouter);
