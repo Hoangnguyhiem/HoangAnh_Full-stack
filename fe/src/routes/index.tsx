@@ -14,6 +14,9 @@ import { Route, Routes } from "react-router-dom";
 
 const Router = () => {
     return (
+        // ĐĂNG NHẬP ĐỂ THÊM VÀO GIỎ HÀNG
+        // tài khoản: lhoanganh814@gmail.com
+        // mật khẩu : HoanganhDz2004
         <>
             <Routes>
                 <Route path="/" element={<LayoutWebsite/>}>
