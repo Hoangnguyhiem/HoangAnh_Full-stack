@@ -3,6 +3,7 @@ import { message } from 'antd'
 import axios from 'axios'
 import React, { useEffect } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
+import { useNavigate } from 'react-router-dom'
 
 type Props = {}
 interface TAuth {
@@ -16,6 +17,7 @@ interface TAuth {
 
 const Signin = (props: Props) => {
   const { register, handleSubmit, formState: { errors } } = useForm<TAuth>()
+  const navigater = useNavigate()
 
 
   const [messageApi, contextHodlder] = message.useMessage()
@@ -32,7 +34,10 @@ const Signin = (props: Props) => {
       messageApi.open({
         type: 'success',
         content: 'Đăng nhập thành công',
-      })
+      }),
+      setTimeout(() => {
+          navigater(`/products`)
+      }, 2000)
     },
     onError: (error) => {
       messageApi.open({

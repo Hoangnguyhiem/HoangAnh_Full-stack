@@ -20,19 +20,21 @@ const Router = () => {
         <>
             <Routes>
                 <Route path="/" element={<LayoutWebsite/>}>
-                    <Route index element={<HomePage/>}/>
-                    <Route path="products" element={<ListPage />}/>
+                    <Route path="/home" element={<HomePage/>}/>
+                    <Route index element={<ListPage />}/>
                     <Route path="products/:productId" element={<DetailPage />}/>
                     <Route path="products/pay" element={<PayPage />}/>
                     <Route path="carts/:userId" element={<CartPage />}/>
                     <Route path="signin" element={<Signin />}/>
                     <Route path="signup" element={<Signup />}/>
                 </Route>
+               
+                    {/* <Route path="error" element={<ErrorPage />}/> */}
                 <Route path="admin" element={<LayoutAdmin/>}>
                     <Route index element={<DashboardPage/>}/>
                     <Route path="products" element={<ProductManagementPage/>}/>
                 </Route>
-                <Route path="*" element={<ErrorPage />} />
+                {/* <Route path="*" element={<ErrorPage />} /> */}
             </Routes>
         </>
     );

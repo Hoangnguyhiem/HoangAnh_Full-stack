@@ -3,6 +3,7 @@ import { message } from 'antd';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import ErrorPage from '../404/page';
 
 type Props = {}
 
@@ -11,7 +12,11 @@ const DetailPage = (props: Props) => {
   const [quantity, setQuantity] = useState(1)
   const [colors, setSelectedColor] = useState<any>({});
   const [sizes, setSelectedSize] = useState<any>({});
-  
+  const [closes, setCloses] = useState<boolean>(false)
+  const toggleColor = () => {
+    setCloses(!color);
+  };
+
 
   const { productId } = useParams()
 
@@ -84,9 +89,10 @@ const DetailPage = (props: Props) => {
         if (user) {
           const { data } = JSON.parse(user)
           const userId = data.id
-          const pr =  await axios.post(`http://localhost:8080/api/carts/add-to-cart`, { ...cart, userId })
-          console.log(pr);
-          
+          await axios.post(`http://localhost:8080/api/carts/add-to-cart`, { ...cart, userId });
+        }else {
+          setCloses(!closes);
+          throw new Error("Them vao gio hang that bai")
         }
 
       } catch (error) {
@@ -110,11 +116,11 @@ const DetailPage = (props: Props) => {
 
   const { _id: colorId, price, size, slug, status, discount } = sizes
   const name = data?.data?.name
-  const { color , image } = colors
+  const { color, image } = colors
 
   // console.log(color);
   // console.log(image);
-  
+
 
   const onSubmitCart = () => {
     mutate({ colorId, productId, color, image, price, size, name, quantity, slug } as any)
@@ -125,7 +131,7 @@ const DetailPage = (props: Props) => {
   }
 
   const [currentIndex, setCurrentIndex] = useState(0);
-  
+
 
   const handleThumbnailClick = (index: any) => {
     setCurrentIndex(index);
@@ -139,10 +145,12 @@ const DetailPage = (props: Props) => {
     setCurrentIndex((currentIndex - 1 + data?.data.attributes[0].image.length) % data?.data.attributes[0].image.length);
   };
 
+
+
   return (
     <>
       {contextHolder}
-      <main>
+      <main className={`${closes ? "pointer-events-none cursor-default" : ""}`}>
         <div className="lg:mt-[34px]">
           <div className="pc:px-[48px] lg:flex lg:flex-wrap">
 
@@ -269,7 +277,7 @@ const DetailPage = (props: Props) => {
                     <button
                       key={dotIndex}
                       className={`w-[8px] h-[8px] rounded-[50%] border-[1px] mx-[3.5px] ${dotIndex === currentIndex ? 'bg-black border-transparent' : 'bg-white border-[#bcbcbc]'}`}
-                      onClick={() => handleThumbnailClick(dotIndex)} 
+                      onClick={() => handleThumbnailClick(dotIndex)}
                     >
                     </button>
                   ))}
@@ -286,7 +294,7 @@ const DetailPage = (props: Props) => {
                       key={index}
                       className={`pt-[120%] bg-cover bg-no-repeat bg-center cursor-pointer relative ${index === currentIndex ? 'border-[#bcbcbc] border-[1px]' : ''}`} // Apply the custom border class
                       style={{ backgroundImage: `url(${value})` }}
-                      onClick={() => handleThumbnailClick(index)} 
+                      onClick={() => handleThumbnailClick(index)}
                     ></div>
                   ))}
                 </div>
@@ -843,6 +851,7 @@ const DetailPage = (props: Props) => {
           </div>
         </div>
       </main>
+      <ErrorPage closes={closes} onClick={toggleColor} />
     </>
   )
 }
