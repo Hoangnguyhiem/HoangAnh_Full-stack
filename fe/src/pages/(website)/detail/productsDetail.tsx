@@ -5,17 +5,16 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import ErrorPage from '../404/page';
 
-type Props = {}
+type Props = {
+  onClicks: () => void;
+}
 
-const DetailPage = (props: Props) => {
+
+const DetailPage = ({onClicks }: Props) => {
   const [messageApi, contextHolder] = message.useMessage()
   const [quantity, setQuantity] = useState(1)
   const [colors, setSelectedColor] = useState<any>({});
   const [sizes, setSelectedSize] = useState<any>({});
-  const [closes, setCloses] = useState<boolean>(false)
-  const toggleColor = () => {
-    setCloses(!color);
-  };
 
 
   const { productId } = useParams()
@@ -91,8 +90,8 @@ const DetailPage = (props: Props) => {
           const userId = data.id
           await axios.post(`http://localhost:8080/api/carts/add-to-cart`, { ...cart, userId });
         }else {
-          setCloses(!closes);
-          throw new Error("Them vao gio hang that bai")
+          onClicks()
+          throw new Error("")
         }
 
       } catch (error) {
@@ -150,7 +149,8 @@ const DetailPage = (props: Props) => {
   return (
     <>
       {contextHolder}
-      <main className={`${closes ? "pointer-events-none cursor-default" : ""}`}>
+      {/* className={`${closes ? "pointer-events-none cursor-default" : ""}`} */}
+      <main >
         <div className="lg:mt-[34px]">
           <div className="pc:px-[48px] lg:flex lg:flex-wrap">
 
@@ -851,7 +851,7 @@ const DetailPage = (props: Props) => {
           </div>
         </div>
       </main>
-      <ErrorPage closes={closes} onClick={toggleColor} />
+      
     </>
   )
 }

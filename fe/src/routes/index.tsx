@@ -10,29 +10,35 @@ import HomePage from "@/pages/(website)/home/page";
 import LayoutWebsite from "@/pages/(website)/layout";
 import ListPage from "@/pages/(website)/list/page";
 import PayPage from "@/pages/(website)/pay/page";
+import { useState } from "react";
 import { Route, Routes } from "react-router-dom";
 
+
 const Router = () => {
+    const [closes, setCloses] = useState<boolean>(false)
+    const toggleColor = () => {
+        setCloses(!closes);
+    };
     return (
         // ĐĂNG NHẬP ĐỂ THÊM VÀO GIỎ HÀNG
         // tài khoản: lhoanganh814@gmail.com
         // mật khẩu : HoanganhDz2004
         <>
             <Routes>
-                <Route path="/" element={<LayoutWebsite/>}>
-                    <Route path="/home" element={<HomePage/>}/>
-                    <Route index element={<ListPage />}/>
-                    <Route path="products/:productId" element={<DetailPage />}/>
-                    <Route path="products/pay" element={<PayPage />}/>
-                    <Route path="carts/:userId" element={<CartPage />}/>
-                    <Route path="signin" element={<Signin />}/>
-                    <Route path="signup" element={<Signup />}/>
+                <Route path="/" element={<LayoutWebsite closes={closes} onClicks={toggleColor} />}>
+                    <Route path="/home" element={<HomePage />} />
+                    <Route index element={<ListPage />} />
+                    <Route path="products/:productId" element={<DetailPage onClicks={toggleColor} />} />
+                    <Route path="products/pay" element={<PayPage />} />
+                    <Route path="carts/:userId" element={<CartPage />} />
                 </Route>
-               
-                    {/* <Route path="error" element={<ErrorPage />}/> */}
-                <Route path="admin" element={<LayoutAdmin/>}>
-                    <Route index element={<DashboardPage/>}/>
-                    <Route path="products" element={<ProductManagementPage/>}/>
+                <Route path="signin" element={<Signin />} />
+                <Route path="signup" element={<Signup />} />
+
+                {/* <Route path="error" element={<ErrorPage />}/> */}
+                <Route path="admin" element={<LayoutAdmin />}>
+                    <Route index element={<DashboardPage />} />
+                    <Route path="products" element={<ProductManagementPage />} />
                 </Route>
                 {/* <Route path="*" element={<ErrorPage />} /> */}
             </Routes>

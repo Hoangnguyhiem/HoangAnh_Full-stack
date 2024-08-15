@@ -36,7 +36,7 @@ const Signin = (props: Props) => {
         content: 'Đăng nhập thành công',
       }),
       setTimeout(() => {
-          navigater(`/products`)
+          navigater(`/`)
       }, 2000)
     },
     onError: (error) => {

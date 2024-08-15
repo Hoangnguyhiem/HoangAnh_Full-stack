@@ -1,8 +1,11 @@
 
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom"
+type Props = {
+  onClicks: () => void;
+}
 
-const Header = () => {
+const Header = ({ onClicks }: Props) => {
 
   const [userId, setUserId] = useState(null); // Initialize state with null
 
@@ -14,7 +17,6 @@ const Header = () => {
     }
   }, []); // Empty dependency array to run this effect only on mount
 
-  console.log(userId);
   return (
     <>
       <div className="bg-black h-[42px] text-center flex">
@@ -205,7 +207,8 @@ const Header = () => {
               </a>
             </div>
             <div className="relative flex items-center col-start-3 lg:col-start-2">
-              <Link to={`carts/${userId}`} className='w-[40px] h-[40px] flex justify-center items-center text-center'>
+              <Link to={userId ? `carts/${userId}` : '#'}
+                onClick={userId ? undefined : onClicks} className='w-[40px] h-[40px] flex justify-center items-center text-center'>
                 <img className=" ls-is-cached lazyloaded" src="https://file.hstatic.net/200000642007/file/icon-cart_d075fce117f74a07ae7f149d8943fc33.svg" data-src="https://file.hstatic.net/200000642007/file/icon-cart_d075fce117f74a07ae7f149d8943fc33.svg" alt="Icon cart" width={24} height={24} />
               </Link>
               <div className="absolute w-[13px] h-[13px] text-[9px] rounded-[100%] top-[10px] right-[5px] bg-black text-white flex items-center justify-center">4</div>

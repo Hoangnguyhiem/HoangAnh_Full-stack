@@ -6,9 +6,9 @@ import { Link } from 'lucide-react'
 import React from 'react'
 import { useParams } from 'react-router-dom'
 
-type Props = {}
 
-const CartPage = (props: Props) => {
+
+const CartPage = () => {
 
     const [messageApi, contextHolder] = message.useMessage()
     const { userId } = useParams()

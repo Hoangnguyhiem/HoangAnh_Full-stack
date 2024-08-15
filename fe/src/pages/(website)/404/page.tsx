@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom"
 
 
@@ -6,11 +7,20 @@ type Props = {
   onClick: () => void;
 }
 
-const ErrorPage = ({closes, onClick } : Props) => {
+const ErrorPage = ({ closes, onClick }: Props) => {
 
-  
+
+  useEffect(() => {
+    const user = localStorage.getItem('user');
+    if (user) {
+      const { data } = JSON.parse(user)
+      setUserid(data.id)
+    }
+  })
+  const [userId, setUserid] = useState()
+
   return (
-    <main className={`${closes ? "" : "hidden"}`}>
+    <main className={`${closes ? "" : "hidden"} ${ userId ? "hidden" : "" }`}>
       <div className="fixed z-20 top-0 left-0 w-full h-[100%] text-center bg-black bg-opacity-[0.5]">
         <div className="absolute top-[50%] translate-y-[-50%] left-[50%] translate-x-[-50%] max-w-[430px] min-w-[300px] bg-white p-[20px] rounded-[10px]">
 
