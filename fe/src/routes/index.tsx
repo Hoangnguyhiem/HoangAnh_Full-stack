@@ -5,7 +5,7 @@ import ErrorPage from "@/pages/(website)/404/page";
 import Signin from "@/pages/(website)/auth/signin";
 import Signup from "@/pages/(website)/auth/signup";
 import CartPage from "@/pages/(website)/cart/page";
-import DetailPage from "@/pages/(website)/detail/productsDetail";
+import DetailPage from "@/pages/(website)/detail/page";
 import HomePage from "@/pages/(website)/home/page";
 import LayoutWebsite from "@/pages/(website)/layout";
 import ListPage from "@/pages/(website)/list/page";
@@ -31,6 +31,7 @@ const Router = () => {
                     <Route path="products/:productId" element={<DetailPage onClicks={toggleColor} />} />
                     <Route path="products/pay" element={<PayPage />} />
                     <Route path="carts/:userId" element={<CartPage />} />
+                    {/* <Route path="error" element={<ErrorPage />} /> */}
                 </Route>
                 <Route path="signin" element={<Signin />} />
                 <Route path="signup" element={<Signup />} />
@@ -40,7 +41,7 @@ const Router = () => {
                     <Route index element={<DashboardPage />} />
                     <Route path="products" element={<ProductManagementPage />} />
                 </Route>
-                {/* <Route path="*" element={<ErrorPage />} /> */}
+                <Route path="**" element={<ErrorPage />} />
             </Routes>
         </>
     );

@@ -4,7 +4,7 @@ import Product from "../models/product";
 export const create = async (req, res) => {
     try {
         const product = await Product.create(req.body);
-        console.log(req.body)
+   
 
         return res.status(StatusCodes.CREATED).json(product);
     } catch (error) {
@@ -50,7 +50,7 @@ export const getAllProducts = async (req, res) => {
                     path: 'sizes'
                 }
             });
-            console.log(product);
+ 
             
         return res.status(StatusCodes.OK).json(product);
     } catch (error) {

@@ -16,7 +16,7 @@ const userSchema = new Schema(
         },
         date: {
             type: String,
-            unique: true,
+         
         },
         role: {
             type: String,

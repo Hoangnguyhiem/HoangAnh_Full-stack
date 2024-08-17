@@ -2,6 +2,7 @@ import { getAllProducts } from '@/services/product'
 import { useQuery } from '@tanstack/react-query'
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+import ErrorPage from '../../404/page'
 
 type Props = {}
 
@@ -19,7 +20,7 @@ const ProductsList = (props: Props) => {
     useEffect(() => {
         window.scrollTo(0, 0);
     }, []);
-    if (isLoading) return <div>Loading...</div>
+    if (isLoading) return <ErrorPage/>
     if (isError) return <div>{error.message}</div>
 
     const handleColorChange = (productIndex: number, item: any) => {

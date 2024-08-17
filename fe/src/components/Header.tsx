@@ -1,21 +1,33 @@
 
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom"
+import { Link, useParams } from "react-router-dom"
 type Props = {
   onClicks: () => void;
 }
 
 const Header = ({ onClicks }: Props) => {
 
-  const [userId, setUserId] = useState(null); // Initialize state with null
+  const [userId, setUserId] = useState(null);
+  console.log(userId);
 
+  
   useEffect(() => {
     const user = localStorage.getItem("user");
     if (user) {
       const { data } = JSON.parse(user);
       setUserId(data.id);
     }
-  }, []); // Empty dependency array to run this effect only on mount
+  }, []);
+
+  const { data } = useQuery({
+    queryKey: ['carts', userId],
+    queryFn: () => {
+      return axios.get(`http://localhost:8080/api/carts/${userId}`)
+    },
+    enabled: !!userId,
+  })
 
   return (
     <>
@@ -211,7 +223,7 @@ const Header = ({ onClicks }: Props) => {
                 onClick={userId ? undefined : onClicks} className='w-[40px] h-[40px] flex justify-center items-center text-center'>
                 <img className=" ls-is-cached lazyloaded" src="https://file.hstatic.net/200000642007/file/icon-cart_d075fce117f74a07ae7f149d8943fc33.svg" data-src="https://file.hstatic.net/200000642007/file/icon-cart_d075fce117f74a07ae7f149d8943fc33.svg" alt="Icon cart" width={24} height={24} />
               </Link>
-              <div className="absolute w-[13px] h-[13px] text-[9px] rounded-[100%] top-[10px] right-[5px] bg-black text-white flex items-center justify-center">4</div>
+              <div className={`${userId ? "" : "hidden"} absolute w-[13px] h-[13px] text-[9px] rounded-[100%] top-[10px] right-[5px] bg-black text-white flex items-center justify-center`}>{data?.data.totalQuantity}</div>
             </div>
             <div className="items-center hidden lg:flex col-start-2 row-start-1 lg:col-start-3">
               <a href="" className='w-[40px] h-[40px] flex justify-center items-center text-center'>

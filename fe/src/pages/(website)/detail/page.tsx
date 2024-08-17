@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { message } from 'antd';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
@@ -10,7 +10,7 @@ type Props = {
 }
 
 
-const DetailPage = ({onClicks }: Props) => {
+const DetailPage = ({ onClicks }: Props) => {
   const [messageApi, contextHolder] = message.useMessage()
   const [quantity, setQuantity] = useState(1)
   const [colors, setSelectedColor] = useState<any>({});
@@ -80,16 +80,25 @@ const DetailPage = ({onClicks }: Props) => {
 
   }, [data]);
 
+  const queryClient = useQueryClient()
+  const [userId, setUserId] = useState()
+
   const user = localStorage.getItem("user")
+  useEffect(() => {
+    if (user) {
+      const { data } = JSON.parse(user)
+      const userId = data.id
+      setUserId(userId)
+
+    }
+  })
 
   const { mutate } = useMutation({
     mutationFn: async (cart: any) => {
       try {
         if (user) {
-          const { data } = JSON.parse(user)
-          const userId = data.id
           await axios.post(`http://localhost:8080/api/carts/add-to-cart`, { ...cart, userId });
-        }else {
+        } else {
           onClicks()
           throw new Error("")
         }
@@ -102,7 +111,10 @@ const DetailPage = ({onClicks }: Props) => {
       messageApi.open({
         type: "success",
         content: "Them vao gio hang thanh cong",
-      })
+      }),
+        queryClient.invalidateQueries({
+          queryKey: ['carts', userId],
+        })
     },
     onError: (error) => {
       messageApi.open({
@@ -114,7 +126,7 @@ const DetailPage = ({onClicks }: Props) => {
   })
 
   const { _id: colorId, price, size, slug, status, discount } = sizes
-  const name = data?.data?.name
+  const name = data?.data.name
   const { color, image } = colors
 
   // console.log(color);
@@ -308,7 +320,7 @@ const DetailPage = ({onClicks }: Props) => {
                 <div className="flex justify-between px-[20px] lg:px-0">
 
                   <div className="">
-                    <h1 className='text-[18px] mb-[8px] font-[500] leading-6'>MLB - Áo thun unisex cổ V tay ngắn Varsity Soccer Jersey</h1>
+                    <h1 className='text-[18px] mb-[8px] font-[500] leading-6'>{name}</h1>
                     {data?.data.attributes.map((item: any) => (
                       <div className={`${item.color === colors.color ? "flex" : "hidden"} h-[12px] overflow-hidden`}>
                         {item.sizes.map((value: any, index: any) => (
@@ -335,7 +347,7 @@ const DetailPage = ({onClicks }: Props) => {
                   data?.data.attributes.map((item: any, index: any) => (
                     <div key={index + 1} className={`${item.color === colors.color ? "flex" : "hidden"} tab_price px-[20px] my-[18px] h-[25px] overflow-hidden *:text-[20px] font-[500] lg:px-0`}>
                       {item.sizes.map((value: any, index: any) => (
-                        <span className={`${value.size === sizes.size ? "flex" : "hidden"}`} key={index + 1}>{value.price} VND</span>
+                        <span className={`${value.size === sizes.size ? "flex" : "hidden"}`} key={index + 1}>{new Intl.NumberFormat('vi-VN').format(value.price)} VND</span>
                       ))}
                     </div>
                   ))
@@ -851,7 +863,7 @@ const DetailPage = ({onClicks }: Props) => {
           </div>
         </div>
       </main>
-      
+
     </>
   )
 }

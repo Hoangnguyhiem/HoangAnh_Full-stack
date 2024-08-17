@@ -77,6 +77,8 @@ const cartSchema = new Schema(
 cartSchema.methods.updateTotals = function () {
     this.totalQuantity = this.products.reduce((acc, item) => acc + item.quantity, 0);
     this.totalPrice = this.products.reduce((acc, item) => acc + item.price * item.quantity, 0);
+
+    
     // this.totalDiscount = this.products.reduce(
     //     (acc, item) => acc + item.discount * item.quantity,
     //     0
@@ -85,36 +87,36 @@ cartSchema.methods.updateTotals = function () {
 };
 
 // Thêm middleware để tự động cập nhật các trường tổng hợp trước khi lưu
-// cartSchema.pre("save", function (next) {
-//     this.updateTotals();
-//     next();
-// });
+cartSchema.pre("save", function (next) {
+    this.updateTotals();
+    next();
+});
 
 // Thêm middleware để tự động cập nhật các trường tổng hợp trước khi cập nhật
-// cartSchema.pre("findOneAndUpdate", async function (next) {
-//     const update = this.getUpdate();
+cartSchema.pre("findOneAndUpdate", async function (next) {
+    const update = this.getUpdate();
 
-//     if (update.products) {
-//         const totalQuantity = update.products.reduce((acc, item) => acc + item.quantity, 0);
-//         const totalPrice = update.products.reduce(
-//             (acc, item) => acc + item.price * item.quantity,
-//             0
-//         );
-//         const totalDiscount = update.products.reduce(
-//             (acc, item) => acc + item.discount * item.quantity,
-//             0
-//         );
-//         const finalTotalPrice = totalPrice - totalDiscount;
+    if (update.products) {
+        const totalQuantity = update.products.reduce((acc, item) => acc + item.quantity, 0);
+        const totalPrice = update.products.reduce(
+            (acc, item) => acc + item.price * item.quantity,
+            0
+        );
+        const totalDiscount = update.products.reduce(
+            (acc, item) => acc + item.discount * item.quantity,
+            0
+        );
+        const finalTotalPrice = totalPrice - totalDiscount;
 
-//         this.set({
-//             totalQuantity,
-//             totalPrice,
-//             totalDiscount,
-//             finalTotalPrice,
-//         });
-//     }
+        this.set({
+            totalQuantity,
+            totalPrice,
+            totalDiscount,
+            finalTotalPrice,
+        });
+    }
 
-//     next();
-// });
+    next();
+});
 
 export default mongoose.model.Cart || mongoose.model("Cart", cartSchema);

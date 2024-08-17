@@ -6,7 +6,7 @@ type Props = {}
 
 const ListPage = (props: Props) => {
     const [todo, setTodo] = useState<boolean>(false)
-    console.log(todo)
+
     return (
         <main>
 

@@ -3,7 +3,7 @@ import { message } from 'antd'
 import axios from 'axios'
 
 import { Link } from 'lucide-react'
-import React from 'react'
+import React, { useState } from 'react'
 import { useParams } from 'react-router-dom'
 
 
@@ -14,16 +14,19 @@ const CartPage = () => {
     const { userId } = useParams()
 
 
-    const { data: carts, refetch } = useQuery({
+    const { data: carts } = useQuery({
         queryKey: ['carts', userId],
         queryFn: () => {
             return axios.get(`http://localhost:8080/api/carts/${userId}`)
         }
     })
+    console.log(carts);
 
+    const queryClient = useQueryClient()
     const { mutate } = useMutation({
         mutationFn: async (colorId: string) => {
             try {
+
                 axios.post(`http://localhost:8080/api/carts/remove`, { userId, colorId })
             } catch (error) {
                 throw new Error(`Có lỗi xảy ra, xin thử lại sau`)
@@ -33,8 +36,13 @@ const CartPage = () => {
             messageApi.open({
                 type: 'success',
                 content: 'Xóa thành công',
-            });
-            window.location.reload()
+            }),
+                queryClient.invalidateQueries({
+                    queryKey: ['carts', userId],
+                }),
+                queryClient.refetchQueries({
+                    queryKey: ['carts', userId],
+                })
         },
         onError: (error) => {
             messageApi.open({
@@ -67,8 +75,8 @@ const CartPage = () => {
                         </div>
 
 
-                        {carts?.data?.products?.length > 0 ? (
-                            carts?.data.products.map((cart: any, index: any) => (
+                        {carts?.data?.cartData.products?.length > 0 ? (
+                            carts?.data.cartData.products.map((cart: any, index: any) => (
                                 <div key={index + 1} className="px-[20px]">
                                     <div className="flex flex-wrap items-center justify-between mt-[24px] lg:justify-between lg:flex-nowrap">
                                         <div className='flex items-start w-[100%]'>
@@ -89,7 +97,7 @@ const CartPage = () => {
                                                     <div className='text-[12px] text-black font-[500] my-[4px]'>43BKS / {cart.size} / {cart.slug}</div>
                                                     <div className='text-[12px] text-black font-[500]'>Số lượng: {cart.quantity}</div>
                                                     <div className='mt-[24px] *:text-[16px] font-[700]'>
-                                                        <span>{cart.price} VND</span>
+                                                        <span>{new Intl.NumberFormat('vi-VN').format(cart.price)} VND</span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -128,7 +136,7 @@ const CartPage = () => {
                             <h2 className='font-[700] text-[18px] mb-[20px]'>THÔNG TIN ĐƠN HÀNG</h2>
                             <div className='flex justify-between text-[14px] font-[500]'>
                                 <span className=''>Tạm tính</span>
-                                <span>1,690,000₫</span>
+                                <span>{new Intl.NumberFormat('vi-VN').format(carts?.data?.totalPrice)} VND</span>
                             </div>
                             <div className='flex justify-between mt-[12px] text-[14px] font-[500]'>
                                 <span>Phí vận chuyển</span>
@@ -136,7 +144,8 @@ const CartPage = () => {
                             </div>
                             <div className='flex justify-between pt-[16px] mt-[16px]  border-t-[2px] border-t-black *:text-[16px] *:font-[700]'>
                                 <span>Tổng đơn hàng</span>
-                                <span>1,690,000₫</span>
+                                <span>{new Intl.NumberFormat('vi-VN').format(carts?.data?.totalPrice)} VND</span>
+
                             </div>
 
                         </div>

@@ -1,4 +1,4 @@
-import ErrorPage from "@/pages/(website)/404/page"
+import NotificationPage from "@/pages/(website)/notification/page";
 
 type Props = {
     closes: boolean;
@@ -42,7 +42,7 @@ const Footer = ({ closes, onClick }: Props) => {
                     </div>
                 </div>
             </footer>
-            <ErrorPage closes={closes} onClick={onClick}/>
+            <NotificationPage closes={closes} onClick={onClick}/>
         </>
     )
 }
