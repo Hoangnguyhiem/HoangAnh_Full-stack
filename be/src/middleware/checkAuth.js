@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
-import User from "../models/user";
-import { isTokenBlacklisted } from "../controllers/auth";
+import User from "../models/user.js";
+import { isTokenBlacklisted } from "../controllers/auth.js";
 
 export const checkAuth = async (req, res, next) => {
     try {

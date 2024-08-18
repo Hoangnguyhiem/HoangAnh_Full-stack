@@ -1,6 +1,5 @@
 import { StatusCodes } from "http-status-codes";
-import Cart from "../models/cart";
-import Product from "../models/product";
+import Cart from "../models/cart.js";
 const findProductInCart = (cart, productId) => {
     return cart.products.find((item) => item.productId.toString() === productId);
 };

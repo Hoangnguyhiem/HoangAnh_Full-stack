@@ -3,35 +3,28 @@ import dotenv from "dotenv";
 import express from "express";
 import morgan from "morgan";
 
-import { connectDB } from "./config/db";
-import authRouter from "./routers/auth";
-import productRouter from "./routers/product";
-import categoryRouter from "./routers/category";
-import cartRouter from "./routers/cart";
-import orderRouter from "./routers/order";
-import attribute from "./routers/attribute";
-import { ValueAttributeModel } from "./models/attribute";
-import AttributeSchema from "./models/attribute"
-import Product from "./models/product"
+import connectMongoDB from "./src/config/db.js";
+
+import router from "./src/routers/index.js";
 const app = express();
 dotenv.config();
 // middleware
 app.use(express.json());
+app.use(
+    express.urlencoded({
+      extended: true,
+    })
+  );
 app.use(cors());
 app.use(morgan("tiny"));
 
 // connect db
-
-const dbURL = process.env.DB_URI
-connectDB(dbURL);
+const port = process.env.PORT || 8000;
+const dbUrl = process.env.DB_URI;
+connectMongoDB(dbUrl);
 // mongodb+srv://vinsomatem97:vinsomatem97@mlb.jo6kt.mongodb.net/?retryWrites=true&w=majority&appName=MLB
 // routers
-app.use("/api", authRouter);
-app.use("/api", productRouter);
-app.use("/api", categoryRouter);
-app.use("/api", cartRouter);
-app.use("/api", orderRouter);
-app.use("/api", attribute);
+app.use("/api", router);
 // app.use('/products/:productId/:valueAttributeId', async (req, res) => {
 //     const { productId, valueAttributeId } = req.params;
 
@@ -114,5 +107,4 @@ app.use("/api", attribute);
 //     }
 // });
 
-
-export const viteNodeApp = app;
+app.listen(port, () => console.log("Server running"));

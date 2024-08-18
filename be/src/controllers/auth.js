@@ -2,8 +2,8 @@ import bcryptjs from "bcryptjs";
 import { StatusCodes } from "http-status-codes";
 import Joi from "joi";
 import jwt from "jsonwebtoken";
-import User from "../models/user";
-import BlacklistedToken from "../models/black-listed-token";
+import User from "../models/user.js";
+import BlacklistedToken from "../models/black-listed-token.js";
 
 // const signupSchema = Joi.object({
 //     name: Joi.string().min(3).max(30).messages({

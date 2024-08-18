@@ -6,20 +6,20 @@ import {
     getAllAttributes,
     getAttributeById,
     updateAttribute,
-} from "../controllers/attribute";
+} from "../controllers/attribute.js";
 
 const router = Router();
 // Route để tạo mới một thuộc tính
-router.post("/attributes", createAttribute);
+router.post("/", createAttribute);
 
 // Route để thêm giá trị cho thuộc tính đã tồn tại
-router.post("/attributes/:id/values", createValueAttribute);
+router.post("/:id/values", createValueAttribute);
 
 // Route để lấy tất cả các thuộc tính
-router.get("/attributes", getAllAttributes);
+router.get("", getAllAttributes);
 
 // Route để lấy một thuộc tính theo ID
-router.get("/attributes/:id", getAttributeById);
+router.get("/:id", getAttributeById);
 
 // Route để cập nhật một thuộc tính theo ID
 router.put("/attributes/:id", updateAttribute);

@@ -5,7 +5,6 @@ export default defineConfig({
     // ...vite configures
     server: {
         // vite server configs, for details see [vite doc](https://vitejs.dev/config/#server-host)
-        host: true,
         port: 8080,
     },
     plugins: [

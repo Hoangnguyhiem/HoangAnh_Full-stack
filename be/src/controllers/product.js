@@ -1,5 +1,5 @@
 import { StatusCodes } from "http-status-codes";
-import Product from "../models/product";
+import Product from "../models/product.js";
 
 export const create = async (req, res) => {
     try {

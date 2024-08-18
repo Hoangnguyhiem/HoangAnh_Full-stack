@@ -6,14 +6,14 @@ import {
     getProductById,
     related,
     updateProductById,
-} from "../controllers/product";
-import { checkAuth } from "../middleware/checkAuth";
+} from "../controllers/product.js";
+import { checkAuth } from "../middleware/checkAuth.js";
 
 const router = Router();
-router.get("/products", getAllProducts);
-router.get("/products/:id", getProductById);
-router.get("/products/:categoryId/related/:productId", related);
-router.delete("/products/:id", deleteProductById);
-router.put("/products/:id", updateProductById);
-router.post("/products", create);
+router.get("/", getAllProducts);
+router.get("/:id", getProductById);
+router.get("/:categoryId/related/:productId", related);
+router.delete("/:id", deleteProductById);
+router.put("/:id", updateProductById);
+router.post("", create);
 export default router;

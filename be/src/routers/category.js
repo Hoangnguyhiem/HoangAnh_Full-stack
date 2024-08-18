@@ -5,12 +5,12 @@ import {
     getAll,
     getCategoryById,
     updateCategoryById,
-} from "../controllers/category";
+} from "../controllers/category.js";
 
 const router = Router();
-router.get("/categories", getAll);
-router.get("/categories/:id", getCategoryById);
-router.delete("/categories/:id", deleteCategoryById);
-router.put("/categories/:id", updateCategoryById);
-router.post("/categories", create);
+router.get("/", getAll);
+router.get("/:id", getCategoryById);
+router.delete("/:id", deleteCategoryById);
+router.put("/:id", updateCategoryById);
+router.post("/add", create);
 export default router;
