@@ -1,7 +1,7 @@
 import { useMutation } from '@tanstack/react-query'
 import { message } from 'antd'
 import axios from 'axios'
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 
